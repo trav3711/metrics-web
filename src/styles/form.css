@@ -1,0 +1,29 @@
+@media all and (min-width: 480px) {
+  .Login {
+    padding: 60px 0;
+  }
+
+  .Register {
+    padding: 60px 0;
+  }
+
+  .Login form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+
+  .Register form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+
+  .Login h1 {
+    text-align: center;
+    padding: 1em 0;
+  }
+
+  .Register h1 {
+    text-align: center;
+    padding: 1em 0;
+  }
+}
