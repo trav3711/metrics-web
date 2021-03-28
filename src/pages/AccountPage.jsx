@@ -1,18 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { SessionContext } from "../components/session.ts";
 
-class Account extends React.Component {
-  constructor(props){
-    super(props)
-
-  }
-
-  render(props){
-    return(
-      <p>
-        {props}
-      </p>
-    )
-  }
-
-
+const AccountPage = () => {
+  const session = useContext(SessionContext)
+  return(
+    <div>
+      <h6>username: {session.username}</h6>
+    </div>
+  )
 }
+
+export default AccountPage

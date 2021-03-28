@@ -10,19 +10,17 @@ function Login(props, { onClick }) {
   const [accessKey, setAccessKey] = useState("");
   const [refreshKey, setRefreshKey] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  const [loading, setLoading] = usState(false);
+  const [loading, setLoading] = useState(false);
 
 
   function validateForm() {
-    //console.log("validated!")
     return username.length > 0 && password.length > 0;
   }
 
   function handleSubmit() {
-    event.preventDefault();
     setLoading(true);
 
-    fetch('http://localhost:8000/auth/login/', {
+    fetch('http://mymetrics.app/auth/login/', {
      method: 'post',
      headers: {'Content-Type':'application/json'},
      body: JSON.stringify({
@@ -32,6 +30,7 @@ function Login(props, { onClick }) {
     })
     .then((response) => response.json())
      .then((responseJson) => {
+       console.log(username);
        setAccessKey(responseJson.access);
        setRefreshKey(responseJson.refresh);
      })
@@ -40,6 +39,7 @@ function Login(props, { onClick }) {
      });
 
      setSessionCookie({ username, password, accessKey, refreshKey })
+     setLoggedIn(true);
      setLoading(false);
 
   }
@@ -48,11 +48,10 @@ function Login(props, { onClick }) {
     <div className="Login">
       <h1>Sign In!</h1>
       <Form onSubmit={handleSubmit}>
-        <Form.Group size="lg" controlId="email">
+        <Form.Group size="lg" controlId="username">
           <Form.Label>Username</Form.Label>
           <Form.Control
             autoFocus
-            value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </Form.Group>
@@ -60,14 +59,12 @@ function Login(props, { onClick }) {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
         <Button block size="lg"
                 type="submit"
                 disabled={!validateForm()}
-                onClick={props.onClick(username, password, accessKey, refreshKey)}
                 >
           Login
         </Button>

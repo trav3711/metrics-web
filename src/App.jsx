@@ -10,25 +10,15 @@ import Header from './components/Header'
 import { SessionContext, getSessionCookie, setSessionCookie } from "./components/session.ts";
 import './App.css';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "Metrics",
-      subtitle : "quantify your life",
-      login : {
-        title: "metrics Login"
-      }
-    }
-  }
+const Routes = () => {
+  const [session, setSession] = useState(getSessionCookie());
+  useEffect(
+   () => {
+     setSession(getSessionCookie());
+   },
+   [session]
+  );
 
-  render() {
-    const [session, setSession] = useState(getSessionCookie());
-    useEffect(
-      () => {
-        setSession(getSessionCookie);
-      }
-    )
     return (
       <SessionContext.Provider value={session}>
         <Router >
@@ -36,12 +26,12 @@ class App extends React.Component {
           <Container>
             <Route path="/" exact render={() => <LandingPage />} />
             <Route exact path="/login">
-              {this.state.user.loggedIn ? <Redirect
+              {session.loggedIn ? <Redirect
                 to={{
                   pathname: "/dashboard/:userName",
                   state: this.state.user
                 }}
-              /> : <LoginPage onClick={this.setcredentials}/>}
+              />: <LoginPage />}
             </Route>
             <Route path="/register" render={() => <RegisterPage />} />
           </Container>
@@ -49,6 +39,13 @@ class App extends React.Component {
       </SessionContext.Provider>
     )
   }
+
+const App = () => {
+  return(
+    <div className="App">
+      <Routes />
+    </div>
+  )
 }
 
 export default App;
